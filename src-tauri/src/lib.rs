@@ -1,7 +1,7 @@
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::TrayIconBuilder,
-    ActivationPolicy, Manager,
+    ActivationPolicy, Manager, WebviewUrl, WebviewWindowBuilder,
 };
 
 #[tauri::command]
@@ -36,10 +36,12 @@ fn do_toggle_overlay(app_handle: &tauri::AppHandle) -> Result<String, String> {
 
 const QUIT_ID: &str = "quit";
 const TOGGLE_ID: &str = "toggle";
+const SETTINGS_ID: &str = "settings";
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_store::Builder::new().build())
         .setup(|app| {
             let window = app
                 .get_webview_window("main")
@@ -52,8 +54,10 @@ pub fn run() {
 
             let quit_i = MenuItem::with_id(app, QUIT_ID, "Quit", true, None::<&str>)?;
             let toggle_i = MenuItem::with_id(app, TOGGLE_ID, "Hide", true, None::<&str>)?;
+            let settings_i =
+                MenuItem::with_id(app, SETTINGS_ID, "Settings...", true, None::<&str>)?;
             let item_sep = PredefinedMenuItem::separator(app)?;
-            let menu = Menu::with_items(app, &[&toggle_i, &item_sep, &quit_i])?;
+            let menu = Menu::with_items(app, &[&toggle_i, &settings_i, &item_sep, &quit_i])?;
             TrayIconBuilder::new()
                 .icon(app.default_window_icon().unwrap().clone())
                 .icon_as_template(true)
@@ -64,6 +68,21 @@ pub fn run() {
                     TOGGLE_ID => {
                         let new_label = do_toggle_overlay(&app).expect("Toggle overlay failed");
                         toggle_i.set_text(new_label).expect("Failed to set label");
+                    }
+                    SETTINGS_ID => {
+                        if app.get_webview_window("settings").is_none() {
+                            WebviewWindowBuilder::new(
+                                app,
+                                "settings",
+                                WebviewUrl::App("settings.html".into()),
+                            )
+                            .title("Settings")
+                            .always_on_top(true)
+                            .build()
+                            .unwrap();
+                        } else {
+                            app.get_webview_window("settings").unwrap().show().unwrap();
+                        }
                     }
                     _ => println!("menu item {:?} not handled", ev.id),
                 });

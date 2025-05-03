@@ -1,7 +1,11 @@
-import { useEffect, useState } from "preact/hooks";
-import { isRegistered, register } from '@tauri-apps/plugin-global-shortcut';
-import "./App.css";
 import { invoke } from '@tauri-apps/api/core';
+import { isRegistered, register } from '@tauri-apps/plugin-global-shortcut';
+import { useEffect, useState } from "preact/hooks";
+import "./Overlay.css";
+import { LazyStore } from '@tauri-apps/plugin-store';
+import { getCurrentWindow } from '@tauri-apps/api/window';
+
+const store = new LazyStore('settings.json');
 
 const toggleShortcut = "CommandOrControl+Shift+F13";
 
@@ -13,9 +17,9 @@ const layerMap = {
   "function": {name: "function", index: 4, shortcut: "CommandOrControl+Shift+F18", path: "./assets/keymap.function.svg"},
 };
 
-function App() {
+function Overlay() {
   const [activeLayer, setActiveLayer] = useState(layerMap.base)
-
+  const [position, setPosition] = useState({alignItems: "center", justifyContent: "center"})
 
   useEffect(async () => {
     if (await isRegistered(toggleShortcut)) return;
@@ -36,9 +40,18 @@ function App() {
         invoke('toggle_overlay');
       }
     });
+
+    store.onChange((key, value) => {
+      if (key === "keymap-position" && value?.css) {
+        setPosition({alignItems: value.css.alignItems, justifyContent: value.css.justifyContent})
+      }
+    });
+    const value = await store.get("keymap-position");
+    setPosition({alignItems: value.css.alignItems, justifyContent: value.css.justifyContent})
   }, [])
+
   return (
-    <main>
+    <main style={{...position}}>
       {activeLayer?.name && <>
         <div className="overlay-wrapper">
           <img src={activeLayer.path}/>
@@ -48,4 +61,4 @@ function App() {
   );
 }
 
-export default App;
+export default Overlay;
