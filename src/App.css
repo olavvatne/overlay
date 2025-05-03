@@ -1,0 +1,28 @@
+html, body {
+  box-sizing: border-box;
+  margin: 0;
+  background-color: transparent;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-wrapper {
+  padding: 1rem;
+  max-width: 40vw;
+  min-width: 400px;
+  
+}
+
+.overlay-wrapper img {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
