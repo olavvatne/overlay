@@ -1,0 +1,85 @@
+
+.sidebar {
+  padding-top: 25px;
+  min-width: 200px;
+  border-right: 1px solid var(--border-color);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: var(--bg-color-lighter);
+
+  & > .separator {
+    height: 1px;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.08) inset;
+    margin: 0 14px;
+  }
+
+  & > ul {
+    padding-left: 0;
+    margin: 8px;
+    list-style: none;
+    overflow-y: auto;
+  }
+  & > ul:last-of-type {
+    flex: 1;
+  }
+  & > ul > li {
+    display: block;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 6px 10px;
+    margin: 2px 0;
+    color: var(--button-text);
+    -webkit-user-select: none;
+    -moz-user-select: none;  
+    -ms-user-select: none;
+    user-select: none;   
+    cursor: pointer;
+  }
+
+  & > ul > li.selected {
+    background: var(--button-selected-bg);
+    border-radius: 4px;
+    color: var(--button-selected-text);
+    font-weight: bold;
+  }
+
+  & > .controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    gap: 4px;
+    border-top: 1px solid var(--border-color);
+    & > div {
+      display: flex;
+    }
+  }
+  & > ul > li.drag-over {
+    background-color: var(--button-selected-bg);
+    color: var(--button-selected-text);
+    border-radius: 4px;
+  }
+
+  & > .controls  button {
+    background: transparent;
+    border: none;
+    color: inherit; 
+    cursor: pointer; 
+  }
+
+  & > .controls  button:disabled {
+    opacity: 0.6;
+    cursor:not-allowed; 
+  }
+
+
+  & > ul.drag-over {
+  background-color: var(--button-selected-bg);
+  border: 2px dashed var(--border-color);
+}
+}

@@ -9,6 +9,9 @@
   "permissions": [
     "core:default",
     "opener:default",
-    "store:default"
+    "store:default",
+    "dialog:default",
+    "fs:allow-home-read",
+    "core:window:allow-start-dragging"
   ]
 }

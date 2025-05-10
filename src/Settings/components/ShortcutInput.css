@@ -1,0 +1,101 @@
+.shortcut-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  height: 28px;
+  background: var(--button-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text-color)
+}
+
+button:hover {
+  background-color: color-mix(in srgb, var(--button-bg) 90%, #fff);
+
+}
+
+.record-dot {
+  width: 8px;
+  height: 8px;
+  background-color: color-mix(in srgb,red 50%, #fff);
+
+  border-radius: 50%;
+}
+
+.record-button:hover>.record-dot,.record-button.recording>.record-dot  {
+  background-color: color-mix(in srgb,red 75%, #fff);
+}
+
+dialog.shortcut-dialog {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px 24px;
+  background: var(--bg-color);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.15), 
+    0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 380px;
+  width: 90%;
+  font-family: system-ui, sans-serif;
+  color: var(--text-color);;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.shortcut-dialog h3 {
+  margin: 0 0 12px 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  user-select: none;
+}
+
+.combo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.combo-list li {
+  margin-bottom: 8px;
+}
+
+.combo-button {
+  width: 100%;
+  text-align: left;
+  padding: 8px 14px;
+  border: 1px solid var(--border-color);
+  background: var(--button-bg);
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text-color);;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.combo-button:hover,
+.combo-button:focus {
+  background-color: color-mix(in srgb, var(--button-bg) 90%, #fff);
+  outline: none;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+

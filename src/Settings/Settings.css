@@ -1,32 +1,106 @@
 :root {
-  --bg-color: #e5e5ea;
-  --text-color: #1f1f1f;
-  --button-bg: #f3f3f4;
-  --button-text: #2e2e2e;
-  --button-selected-bg: #2563eb;
+  --bg-color: #ffffff;
+  --bg-color-lighter: #e3e3e1;
+  --bg-color-alt: #fcfcfc;
+  --text-color: #2b2b2b;
+  --button-bg: #e5e5ea;
+  --button-text: #2b2b2b;
+  --button-text-transparent: rgba(28, 28, 30, 0.5);
+  --button-selected-bg: #007aff; /* MacOS blue accent */
   --button-selected-text: #ffffff;
-  --border-color: #d0d0d0;
+  --border-color: #d7d7d5;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #2c2c2e;
-    --text-color: #f5f5f5;
+    --bg-color: #252322;
+    --bg-color-lighter: #282827;
+    --bg-color-alt: #282827;
+    --text-color: #ececec;
     --button-bg: #3a3a3c;
-    --button-text: #e0e0e0;
-    --button-selected-bg: #3b82f6;
-    --button-selected-text: #ffffff;
-    --border-color: #4a4a4a;
+    --button-text: #ececec;
+    --button-text-transparent: rgba(242, 242, 247, 0.5);
+    --button-selected-bg: #0a84ff; /* MacOS dark mode accent */
+    --button-selected-text: #ececec;
+    --border-color: #3a3a3c;
   }
 }
+
 
 html, body {
   background-color: var(--bg-color);
   user-select: none;
   cursor: default;
   overflow: hidden;
+  font-family: system-ui, sans-serif;
+
+  margin: 0;
+  box-sizing:border-box;
 }
 
 button {
   cursor: pointer;
 }
+
+
+main {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex: 1 1 0;
+  justify-content: stretch;
+  align-items: stretch;
+  color: var(--button-text);
+  font-size: 0.9rem;
+  
+}
+
+::-webkit-scrollbar {
+  width: 18px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent !important; /* ensures it's fully transparent */
+  box-shadow: none;
+  margin: 4px 0;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(120, 120, 120, 0.4);
+  border-radius: 8px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(120, 120, 120, 0.6);
+}
+
+input[type="text"],
+input[type="search"],
+input[type="number"],
+textarea {
+  background-color: var(--bg-color-alt);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--button-selected-bg);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--button-selected-bg) 50%, transparent);
+}
+

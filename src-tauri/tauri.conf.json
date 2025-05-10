@@ -13,9 +13,23 @@
     "macOSPrivateApi": true,
     "windows": [
       {
+        "label": "settings",
+        "url": "settings.html",
+        "dragDropEnabled": true,
+        "titleBarStyle": "Overlay",
+        "title": "",
+        "width": 550,
+        "height": 600,
+        "minWidth": 500,
+        "alwaysOnTop": true,
+        "visible": false
+      },
+      {
+        "label": "main",
         "title": "Ergo Overlay",
         "width": 800,
         "height": 600,
+        "visible": false,
         "resizable": true,
         "dragDropEnabled": false,
         "transparent": true,

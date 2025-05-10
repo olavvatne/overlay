@@ -1,11 +1,33 @@
-import ScreenPosition from "./ScreenPosition";
+import { useState } from "preact/hooks";
+import LayerList from "./LayerList";
 import "./Settings.css";
+import LayerDetails from "./LayerDetails";
+import { useKeymapDrop } from "./hooks/drop";
+import { Details, Sidebar, Titlebar } from "./components";
+import GeneralDetails from "./GeneralDetails";
+
+function getDetails(selected) {
+  if (selected === "general") {
+    return <GeneralDetails />;
+  } else if (!selected) {
+    return <p>Nothing to show</p>;
+  } else {
+    return <LayerDetails selectedId={selected} />;
+  }
+}
 
 function Settings() {
-
+  const [selectedId, setSelectedId] = useState("general");
+  const { className, dropKey } = useKeymapDrop();
   return (
-    <main>
-      <ScreenPosition />
+    <main className={className} key={dropKey}>
+      <Titlebar />
+      <Sidebar>
+        <Sidebar.General selectedId={selectedId} setSelectedId={setSelectedId} />
+        <Sidebar.Separator />
+        <LayerList selectedId={selectedId} setSelectedId={setSelectedId} />
+      </Sidebar>
+      <Details>{getDetails(selectedId)}</Details>
     </main>
   );
 }

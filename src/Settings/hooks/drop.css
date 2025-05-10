@@ -1,0 +1,29 @@
+.drag-over-zone::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0; 
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.1); 
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  z-index: 9998;
+}
+.drag-over-zone::before {
+  content: "Drop files here";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0; 
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+
+  border: 4px dashed var(--button-text-transparent);
+  color: var(--button-text-transparent);
+  margin: 20px; 
+  z-index: 9999;
+}
