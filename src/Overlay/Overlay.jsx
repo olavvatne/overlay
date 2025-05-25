@@ -51,7 +51,7 @@ function Overlay() {
   }
 
   async function setup() {
-    const toggleShortcut = "Command+Shift+F13";
+    const toggleShortcut = await settingsStore.get("keymap-toggle");
     await registerToggleShortcut(toggleShortcut);
 
     const position = await settingsStore.get("keymap-position");

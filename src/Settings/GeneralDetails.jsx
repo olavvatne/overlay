@@ -1,10 +1,16 @@
-import { ScreenPosition } from "./components";
 import "./GeneralDetails.css";
+import { ScreenPosition, OverlayToggleInput } from "./components";
 
 export default function GeneralDetails() {
   return (
-    <section>
-      <ScreenPosition />
-    </section>
+    <>
+      <section className="detail-section">
+        <label>Toggle shortcut</label>
+        <OverlayToggleInput />
+      </section>
+      <section>
+        <ScreenPosition />
+      </section>
+    </>
   );
 }

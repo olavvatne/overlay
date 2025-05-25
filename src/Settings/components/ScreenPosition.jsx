@@ -1,9 +1,7 @@
-import { LazyStore } from "@tauri-apps/plugin-store";
 import { useEffect, useState } from "preact/hooks";
+import { useKeymapStore } from "../hooks/store";
 
 import "./ScreenPosition.css";
-
-const store = new LazyStore("settings.json");
 
 const positions = [
   ["↖", "↑", "↗"],
@@ -31,14 +29,14 @@ const positionStyles = {
 
 export default function ScreenPosition() {
   const [selected, setSelected] = useState(undefined);
-
+  const { settingsStore } = useKeymapStore();
   const handleClick = async (label) => {
     setSelected(label);
-    await store.set("keymap-position", { label: label, css: positionStyles[label] });
+    await settingsStore.set("keymap-position", { label: label, css: positionStyles[label] });
   };
 
   useEffect(async () => {
-    const position = await store.get("keymap-position");
+    const position = await settingsStore.get("keymap-position");
     if (position?.label) {
       setSelected(position.label);
     }
