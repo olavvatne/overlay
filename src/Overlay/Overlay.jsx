@@ -13,7 +13,7 @@ if (import.meta.hot) {
 }
 
 function Overlay() {
-  const [activeLayer, setActiveLayer] = useState({});
+  const [activeLayer, setActiveLayer] = useState(null);
 
   const [position, setPosition] = useState({ alignItems: "center", justifyContent: "center" });
   const { settingsStore, keymapStore } = useKeymapStore();
@@ -96,6 +96,11 @@ function Overlay() {
 
   return (
     <main style={{ ...position }}>
+      {!activeLayer && (
+        <div className="overlay-empty-state">
+          <p>Open settings to set up overlays</p>
+        </div>
+      )}
       {activeLayer?.id && (
         <>
           <div className="overlay-wrapper">

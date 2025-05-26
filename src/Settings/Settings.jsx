@@ -5,12 +5,13 @@ import LayerDetails from "./LayerDetails";
 import { useKeymapDrop } from "./hooks/drop";
 import { Details, Sidebar, Titlebar } from "./components";
 import GeneralDetails from "./GeneralDetails";
+import EmptyLayer from "./components/EmptyLayer";
 
 function getDetails(selected) {
   if (selected === "general") {
     return <GeneralDetails />;
   } else if (!selected) {
-    return <p>Nothing to show</p>;
+    return <EmptyLayer />;
   } else {
     return <LayerDetails selectedId={selected} />;
   }
