@@ -2,10 +2,20 @@
   width: 100%;
   height: 100%;
 
-  & div,svg {
+  & div,
+  svg {
     width: 100%;
     height: 100%;
     display: block;
+    opacity: var(--keymap-opacity);
+  }
+
+  & svg rect {
+    fill: var(--keymap-fill-color);
+    stroke: color-mix(in srgb, var(--keymap-fill-color) 70%, white 30%);
+  }
+
+  & svg text {
+    fill: var(--keymap-text-color);
   }
 }
-

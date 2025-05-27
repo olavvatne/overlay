@@ -1,5 +1,9 @@
 import { invoke } from "@tauri-apps/api/core";
-import { isRegistered, register, unregisterAll } from "@tauri-apps/plugin-global-shortcut";
+import {
+  isRegistered,
+  register,
+  unregisterAll,
+} from "@tauri-apps/plugin-global-shortcut";
 import { useEffect, useState } from "preact/hooks";
 import "./Overlay.css";
 import { useKeymapStore } from "../Settings/hooks/store";
@@ -14,8 +18,14 @@ if (import.meta.hot) {
 
 function Overlay() {
   const [activeLayer, setActiveLayer] = useState(null);
+  const [fillColor, setFillColor] = useState("#ffffff");
+  const [textColor, setTextColor] = useState("#000000");
+  const [opacity, setOpacity] = useState(1);
 
-  const [position, setPosition] = useState({ alignItems: "center", justifyContent: "center" });
+  const [position, setPosition] = useState({
+    alignItems: "center",
+    justifyContent: "center",
+  });
   const { settingsStore, keymapStore } = useKeymapStore();
 
   async function registerToggleShortcut(shortcut) {
@@ -61,6 +71,19 @@ function Overlay() {
         justifyContent: position.css.justifyContent,
       });
     }
+    const fillColor = await settingsStore.get("keymap-fill-color");
+    if (fillColor) {
+      setFillColor(fillColor);
+    }
+    const textColor = await settingsStore.get("keymap-text-color");
+    if (textColor) {
+      setTextColor(textColor);
+    }
+
+    const opacity = await settingsStore.get("keymap-opacity");
+    if (opacity) {
+      setOpacity(opacity);
+    }
 
     const layers = await settingsStore.get("keymap-layers");
     if (layers?.length) {
@@ -104,7 +127,14 @@ function Overlay() {
       {activeLayer?.id && (
         <>
           <div className="overlay-wrapper">
-            <div dangerouslySetInnerHTML={{ __html: activeLayer?.svg }} />
+            <div
+              style={{
+                "--keymap-fill-color": fillColor,
+                "--keymap-text-color": textColor,
+                "--keymap-opacity": opacity,
+              }}
+              dangerouslySetInnerHTML={{ __html: activeLayer?.svg }}
+            />
           </div>
         </>
       )}

@@ -5,15 +5,41 @@ import { ShortcutInput } from "./components";
 import { debounce } from "./utils/debounce";
 
 function KeyMapPreview({ selectedId }) {
-  const { keymapStore } = useKeymapStore();
+  const { keymapStore, settingsStore } = useKeymapStore();
   const [svgContent, setSvgContent] = useState("");
+  const [fillColor, setFillColor] = useState("#ffffff");
+  const [textColor, setTextColor] = useState("#000000");
+  const [opacity, setOpacity] = useState(1);
+
   useEffect(async () => {
     const saved = await keymapStore.get(selectedId);
     if (saved) {
       setSvgContent(saved);
     }
+    const fillColor = await settingsStore.get("keymap-fill-color");
+    if (fillColor) {
+      setFillColor(fillColor);
+    }
+    const textColor = await settingsStore.get("keymap-text-color");
+    if (textColor) {
+      setTextColor(textColor);
+    }
+    const opacity = await settingsStore.get("keymap-opacity");
+    if (opacity) {
+      setOpacity(opacity);
+    }
   }, [selectedId]);
-  return <div className="keymap-preview" dangerouslySetInnerHTML={{ __html: svgContent }} />;
+  return (
+    <div
+      style={{
+        "--keymap-fill-color": fillColor,
+        "--keymap-text-color": textColor,
+        "--keymap-opacity": opacity,
+      }}
+      className="keymap-preview"
+      dangerouslySetInnerHTML={{ __html: svgContent }}
+    />
+  );
 }
 
 export default function LayerDetails({ selectedId }) {

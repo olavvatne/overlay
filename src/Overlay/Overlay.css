@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   box-sizing: border-box;
   margin: 0;
   background-color: transparent;
@@ -17,7 +18,6 @@ main {
   padding: 1rem;
   max-width: 40vw;
   min-width: 400px;
-  
 }
 
 .overlay-wrapper div {
@@ -25,15 +25,26 @@ main {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  & svg {
+    opacity: var(--keymap-opacity);
+  }
+  & svg rect {
+    fill: var(--keymap-fill-color);
+    stroke: color-mix(in srgb, var(--keymap-fill-color) 70%, white 30%);
+  }
+
+  & svg text {
+    fill: var(--keymap-text-color);
+  }
 }
 
 .overlay-empty-state {
-  color:white;
+  color: white;
   font-family: system-ui, sans-serif;
   font-size: 1.5rem;
   border: 4px solid white;
   border-radius: 25px;
   padding: 2rem;
-  background-color: rgba(0,0,0,0.35);
+  background-color: rgba(0, 0, 0, 0.35);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }

@@ -1,5 +1,4 @@
-
-.details >* {
+.details > * {
   z-index: 2;
 }
 .details {
@@ -9,22 +8,20 @@
   padding: 12px 24px;
   padding-top: 24px;
   gap: 12px;
-  overflow-y:auto;
-  
+  overflow-y: auto;
+
   & > section {
     background-color: var(--bg-color-alt);
     padding: 8px 8px;
     border-radius: 4px;
     border: 1.5px solid var(--border-color);
-
   }
 }
 
 .detail-section {
-
   display: grid;
   column-gap: 15px;
-  grid-template-columns: auto minmax(0, 1fr); 
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   flex-direction: column;
   justify-content: stretch;
@@ -37,8 +34,8 @@
   }
 }
 
-
 .detail-section input,
+.detail-section .opacity-input,
 .detail-section .shortcut-input {
   max-width: 300px;
   width: 100%;
