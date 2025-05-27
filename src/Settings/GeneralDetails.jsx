@@ -1,3 +1,4 @@
+import { getVersion } from "@tauri-apps/api/app";
 import "./GeneralDetails.css";
 import {
   ScreenPosition,
@@ -5,8 +6,14 @@ import {
   ColorPickerInput,
   OpacitySliderInput,
 } from "./components";
+import { useEffect, useState } from "preact/hooks";
 
 export default function GeneralDetails() {
+  const [version, setVersion] = useState(null);
+  useEffect(async () => {
+    const v = await getVersion();
+    setVersion(v);
+  });
   return (
     <>
       <section className="detail-section">
@@ -25,6 +32,12 @@ export default function GeneralDetails() {
       <section>
         <ScreenPosition />
       </section>
+      {version && (
+        <section className="detail-section">
+          <p>Version</p>
+          <p style={{ textAlign: "end" }}>v{version}</p>
+        </section>
+      )}
     </>
   );
 }
