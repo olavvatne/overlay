@@ -39,6 +39,7 @@ main {
 }
 
 .overlay-empty-state {
+  margin: 2rem;
   color: white;
   font-family: system-ui, sans-serif;
   font-size: 1.5rem;
