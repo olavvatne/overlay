@@ -1,7 +1,7 @@
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::TrayIconBuilder,
-    Emitter, Manager, WebviewUrl, WebviewWindowBuilder,
+    Emitter, Manager, PhysicalSize, Position, Size, WebviewUrl, WebviewWindowBuilder,
 };
 #[cfg(target_os = "macos")]
 use tauri::{ActivationPolicy, TitleBarStyle};
@@ -31,6 +31,14 @@ fn do_toggle_overlay(app_handle: &tauri::AppHandle) -> Result<String, String> {
         window.hide().map_err(|e| e.to_string())?;
         Ok("Show".to_string())
     } else {
+        if let Ok(Some(monitor)) = window.current_monitor() {
+            let physical_size: PhysicalSize<u32> = *monitor.size();
+            let size: Size = physical_size.into();
+            window.set_size(size).unwrap();
+            window
+                .set_position(Position::Physical(tauri::PhysicalPosition { x: 0, y: 0 }))
+                .unwrap();
+        }
         window.show().map_err(|e| e.to_string())?;
         Ok("Hide".to_string())
     }
@@ -83,6 +91,7 @@ pub fn run() {
                         toggle_i.set_text(new_label).expect("Failed to set label");
                     }
                     SETTINGS_ID => {
+                        let settings_menu = Menu::with_items(app, &[]).unwrap();
                         if app.get_webview_window("settings").is_none() {
                             let settings_window = WebviewWindowBuilder::new(
                                 app,
@@ -90,6 +99,7 @@ pub fn run() {
                                 WebviewUrl::App("settings.html".into()),
                             )
                             .title("")
+                            .menu(settings_menu)
                             .always_on_top(true);
 
                             #[cfg(target_os = "macos")]
@@ -116,6 +126,7 @@ pub fn run() {
                             });
                         } else {
                             let settings_window = app.get_webview_window("settings").unwrap();
+                            settings_window.set_menu(settings_menu).unwrap();
                             settings_window.show().unwrap();
                             window.hide().unwrap();
                             toggle_i.set_enabled(false).unwrap();
