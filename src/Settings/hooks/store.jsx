@@ -12,7 +12,7 @@ export function useKeymapStore() {
       return {
         id,
         path: filePath,
-        name: filePath.split("/").pop(),
+        name: filePath.split(/[/\\]/).pop(),
         shortcut: "",
       };
     });
@@ -24,7 +24,7 @@ export function useKeymapStore() {
       })
     );
 
-    const allNew = [...existing, ...newLayers];
+    const allNew = [...(existing || []), ...newLayers];
     settingsStore.set("keymap-layers", allNew);
     return allNew;
   };
