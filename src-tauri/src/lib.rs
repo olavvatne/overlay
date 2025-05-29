@@ -1,8 +1,10 @@
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::TrayIconBuilder,
-    ActivationPolicy, Emitter, Manager, TitleBarStyle, WebviewUrl, WebviewWindowBuilder,
+    Emitter, Manager, WebviewUrl, WebviewWindowBuilder,
 };
+#[cfg(target_os = "macos")]
+use tauri::{ActivationPolicy, TitleBarStyle};
 
 #[tauri::command]
 fn toggle_overlay(app_handle: tauri::AppHandle) -> Result<String, String> {
@@ -38,6 +40,11 @@ const QUIT_ID: &str = "quit";
 const TOGGLE_ID: &str = "toggle";
 const SETTINGS_ID: &str = "settings";
 
+#[cfg(target_os = "macos")]
+fn configure_macos(app: &mut tauri::App) {
+    app.set_activation_policy(ActivationPolicy::Accessory);
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -51,7 +58,11 @@ pub fn run() {
             window.set_ignore_cursor_events(true)?;
             // https://github.com/tauri-apps/tauri/issues/6562
             window.set_decorations(false)?;
-            app.set_activation_policy(ActivationPolicy::Accessory);
+            #[cfg(target_os = "macos")]
+            {
+                app.set_activation_policy(ActivationPolicy::Accessory);
+            }
+
             window.maximize().expect("Failed to maximize window");
 
             let quit_i = MenuItem::with_id(app, QUIT_ID, "Quit", true, None::<&str>)?;
@@ -78,11 +89,15 @@ pub fn run() {
                                 "settings",
                                 WebviewUrl::App("settings.html".into()),
                             )
-                            .title_bar_style(TitleBarStyle::Overlay)
                             .title("")
-                            .always_on_top(true)
-                            .build()
-                            .unwrap();
+                            .always_on_top(true);
+
+                            #[cfg(target_os = "macos")]
+                            {
+                                settings_window =
+                                    settings_window.title_bar_style(TitleBarStyle::Overlay);
+                            }
+                            let settings_window = settings_window.build().unwrap();
 
                             // Hide overlay window and disable toggle
                             window.hide().unwrap();
