@@ -66,6 +66,7 @@ pub fn run() {
             window.set_ignore_cursor_events(true)?;
             // https://github.com/tauri-apps/tauri/issues/6562
             window.set_decorations(false)?;
+            window.set_skip_taskbar(true)?;
             #[cfg(target_os = "macos")]
             {
                 app.set_activation_policy(ActivationPolicy::Accessory);

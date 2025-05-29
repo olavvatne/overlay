@@ -22,7 +22,8 @@
         "height": 600,
         "minWidth": 500,
         "alwaysOnTop": true,
-        "visible": false
+        "visible": false,
+        "skipTaskbar": true
       },
       {
         "label": "main",
