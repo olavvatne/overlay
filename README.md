@@ -2,6 +2,12 @@
 
 Display ergo keyboard layers onscreen. Can be used for other purposes as well, where you want to display svg images overlays onscreen.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/032094ff-189f-46cd-a473-099144a34381" height="200" />
+  <img src="https://github.com/user-attachments/assets/21d2f194-87e6-4423-ab69-0f82301448b8" height="200" />
+  <img src="https://github.com/user-attachments/assets/decbae02-75ae-432c-b1ea-097ceb4debd1" height="200" />
+</p>
+
 ## ⚡ Usage
 
 ### Generating svg of your keymap
