@@ -1,8 +1,10 @@
-# Ergo Overlay
+# Overlay
 
-Display ergo keyboard layers onscreen.
+Display ergo keyboard layers onscreen. Can be used for other purposes as well, where you want to display svg images overlays onscreen.
 
-## Generating svg keymap
+## ⚡ Usage
+
+### Generating svg of your keymap
 
 Navigate to your custom qmk setup, and:
 
@@ -19,3 +21,20 @@ keymap draw keymap.yaml --select-layers Function > keymap.function.svg
 ```
 
 Alternatively, use web tool [keymap-drawer](https://keymap-drawer.streamlit.app/)
+
+## 🔌 Installation
+
+* Install [Node.js](https://nodejs.org/en/)
+
+```bash
+git clone git@github.com:olavvatne/overlay.git
+npm install
+```
+
+## 📦 Commands
+
+* `npm run tauri dev` - Run Overlap application in dev mode
+
+## 🔒 License
+
+This project is licensed under the MIT License
