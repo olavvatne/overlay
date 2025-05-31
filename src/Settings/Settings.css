@@ -9,6 +9,7 @@
   --button-selected-bg: #007aff; /* MacOS blue accent */
   --button-selected-text: #ffffff;
   --border-color: #d7d7d5;
+  --border-radius: 4px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,8 +27,8 @@
   }
 }
 
-
-html, body {
+html,
+body {
   background-color: var(--bg-color);
   user-select: none;
   cursor: default;
@@ -35,13 +36,12 @@ html, body {
   font-family: system-ui, sans-serif;
 
   margin: 0;
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
 
 button {
   cursor: pointer;
 }
-
 
 main {
   height: 100vh;
@@ -52,7 +52,6 @@ main {
   align-items: stretch;
   color: var(--button-text);
   font-size: 0.9rem;
-  
 }
 
 ::-webkit-scrollbar {
@@ -63,7 +62,6 @@ main {
   background: transparent !important; /* ensures it's fully transparent */
   box-shadow: none;
   margin: 4px 0;
-
 }
 
 ::-webkit-scrollbar-thumb {
@@ -75,7 +73,6 @@ main {
   border-bottom: 1px solid transparent;
   background-clip: padding-box;
   transition: background-color 0.2s;
-
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -101,6 +98,43 @@ textarea {
 input:focus,
 textarea:focus {
   border-color: var(--button-selected-bg);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--button-selected-bg) 50%, transparent);
+  box-shadow: 0 0 0 2px
+    color-mix(in srgb, var(--button-selected-bg) 50%, transparent);
 }
 
+/* Windows */
+.platform-windows {
+  font-family: "Segoe UI", sans-serif;
+
+  --bg-color: #ffffff;
+  --bg-color-lighter: #f3f3f3;
+  --bg-color-alt: #fafafa;
+  --text-color: #000000;
+  --button-bg: #f0f0f0;
+  --button-selected-bg: #0078d7;
+  --button-selected-text: #ffffff;
+  --border-color: #dcdcdc;
+  --border-radius: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .platform-windows {
+    --bg-color: #1e1e1e;
+    --bg-color-lighter: #2c2c2c;
+    --bg-color-alt: #2a2a2a;
+    --text-color: #ffffff;
+    --button-bg: #3a3a3a;
+    --button-selected-bg: #0078d7;
+    --button-selected-text: #ffffff;
+    --border-color: #3c3c3c;
+  }
+}
+
+.platform-windows input[type="text"],
+.platform-windows input[type="search"],
+.platform-windows input[type="number"],
+.platform-windows textarea {
+  border-radius: 4px;
+  padding: 5px 8px;
+  border: 1px solid var(--border-color);
+}

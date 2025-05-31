@@ -1,4 +1,3 @@
-
 .sidebar {
   padding-top: 25px;
   min-width: 200px;
@@ -13,7 +12,7 @@
     height: 1px;
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.08) inset;
+      0 -1px 0 rgba(0, 0, 0, 0.08) inset;
     margin: 0 14px;
   }
 
@@ -36,15 +35,15 @@
     margin: 2px 0;
     color: var(--button-text);
     -webkit-user-select: none;
-    -moz-user-select: none;  
+    -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;   
+    user-select: none;
     cursor: pointer;
   }
 
   & > ul > li.selected {
     background: var(--button-selected-bg);
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     color: var(--button-selected-text);
     font-weight: bold;
   }
@@ -62,24 +61,23 @@
   & > ul > li.drag-over {
     background-color: var(--button-selected-bg);
     color: var(--button-selected-text);
-    border-radius: 4px;
+    border-radius: var(--border-radius);
   }
 
-  & > .controls  button {
+  & > .controls button {
     background: transparent;
     border: none;
-    color: inherit; 
-    cursor: pointer; 
+    color: inherit;
+    cursor: pointer;
   }
 
-  & > .controls  button:disabled {
+  & > .controls button:disabled {
     opacity: 0.6;
-    cursor:not-allowed; 
+    cursor: not-allowed;
   }
-
 
   & > ul.drag-over {
-  background-color: var(--button-selected-bg);
-  border: 2px dashed var(--border-color);
-}
+    background-color: var(--button-selected-bg);
+    border: 2px dashed var(--border-color);
+  }
 }
