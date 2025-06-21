@@ -48,11 +48,6 @@ const QUIT_ID: &str = "quit";
 const TOGGLE_ID: &str = "toggle";
 const SETTINGS_ID: &str = "settings";
 
-#[cfg(target_os = "macos")]
-fn configure_macos(app: &mut tauri::App) {
-    app.set_activation_policy(ActivationPolicy::Accessory);
-}
-
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
