@@ -21,6 +21,7 @@ function Overlay() {
   const [fillColor, setFillColor] = useState("#ffffff");
   const [textColor, setTextColor] = useState("#000000");
   const [opacity, setOpacity] = useState(1);
+  const [size, setSize] = useState(100);
 
   const [position, setPosition] = useState({
     alignItems: "center",
@@ -85,6 +86,11 @@ function Overlay() {
       setOpacity(opacity);
     }
 
+    const size = await settingsStore.get("keymap-size");
+    if (size) {
+      setSize(size);
+    }
+
     const layers = await settingsStore.get("keymap-layers");
     if (layers?.length) {
       for (let layer of layers) {
@@ -118,7 +124,15 @@ function Overlay() {
   }, []);
 
   return (
-    <main style={{ ...position }}>
+    <main
+      style={{
+        ...position,
+        "--keymap-fill-color": fillColor,
+        "--keymap-text-color": textColor,
+        "--keymap-opacity": opacity,
+        "--keymap-size": size,
+      }}
+    >
       {!activeLayer && (
         <div className="overlay-empty-state">
           <p>Open settings to set up overlays</p>
@@ -127,14 +141,7 @@ function Overlay() {
       {activeLayer?.id && (
         <>
           <div className="overlay-wrapper">
-            <div
-              style={{
-                "--keymap-fill-color": fillColor,
-                "--keymap-text-color": textColor,
-                "--keymap-opacity": opacity,
-              }}
-              dangerouslySetInnerHTML={{ __html: activeLayer?.svg }}
-            />
+            <div dangerouslySetInnerHTML={{ __html: activeLayer?.svg }} />
           </div>
         </>
       )}

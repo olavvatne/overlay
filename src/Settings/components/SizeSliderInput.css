@@ -1,0 +1,9 @@
+.size-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  & > input {
+    flex: 1;
+  }
+}

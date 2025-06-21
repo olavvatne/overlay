@@ -16,7 +16,8 @@ main {
 
 .overlay-wrapper {
   padding: 1rem;
-  max-width: 40vw;
+  max-width: calc(40vw * var(--keymap-size));
+  width: calc(40vw * var(--keymap-size));
   min-width: 400px;
 }
 
@@ -27,6 +28,8 @@ main {
   object-fit: contain;
   & svg {
     opacity: var(--keymap-opacity);
+    width: 100%;
+    height: 100%;
   }
   & svg rect {
     fill: var(--keymap-fill-color);

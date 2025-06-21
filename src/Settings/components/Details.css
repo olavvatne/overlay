@@ -36,6 +36,7 @@
 
 .detail-section input,
 .detail-section .opacity-input,
+.detail-section .size-input,
 .detail-section .shortcut-input {
   max-width: 300px;
   width: 100%;

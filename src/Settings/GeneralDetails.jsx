@@ -5,6 +5,7 @@ import {
   OverlayToggleInput,
   ColorPickerInput,
   OpacitySliderInput,
+  SizeSliderInput,
 } from "./components";
 import { useEffect, useState } from "preact/hooks";
 
@@ -28,6 +29,9 @@ export default function GeneralDetails() {
         <span />
         <label>Opacity</label>
         <OpacitySliderInput storeKey="keymap-opacity" initialColor={1} />
+        <span />
+        <label>Size</label>
+        <SizeSliderInput storeKey="keymap-size" initialColor={1} />
       </section>
       <section>
         <ScreenPosition />

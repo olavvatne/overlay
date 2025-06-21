@@ -6,4 +6,5 @@ export { default as ShortcutInput }  from "./ShortcutInput";
 export { default as OverlayToggleInput }  from "./OverlayToggleInput";
 export { default as ColorPickerInput }  from "./ColorPickerInput";
 export { default as OpacitySliderInput }  from "./OpacitySliderInput";
+export { default as SizeSliderInput }  from "./SizeSliderInput";
 
