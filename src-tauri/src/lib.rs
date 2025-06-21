@@ -95,7 +95,7 @@ pub fn run() {
                     SETTINGS_ID => {
                         let settings_menu = Menu::with_items(app, &[]).unwrap();
                         if app.get_webview_window("settings").is_none() {
-                            let settings_window = WebviewWindowBuilder::new(
+                            let mut settings_window = WebviewWindowBuilder::new(
                                 app,
                                 "settings",
                                 WebviewUrl::App("settings.html".into()),
