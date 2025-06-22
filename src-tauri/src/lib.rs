@@ -1,8 +1,11 @@
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::TrayIconBuilder,
-    Emitter, Manager, PhysicalSize, Position, Size, WebviewUrl, WebviewWindowBuilder,
+    Emitter, Manager, WebviewUrl, WebviewWindowBuilder,
 };
+#[cfg(not(target_os = "macos"))]
+use tauri::{PhysicalSize, Position, Size};
+
 #[cfg(target_os = "macos")]
 use tauri::{ActivationPolicy, TitleBarStyle};
 
@@ -31,13 +34,16 @@ fn do_toggle_overlay(app_handle: &tauri::AppHandle) -> Result<String, String> {
         window.hide().map_err(|e| e.to_string())?;
         Ok("Show".to_string())
     } else {
-        if let Ok(Some(monitor)) = window.current_monitor() {
-            let physical_size: PhysicalSize<u32> = *monitor.size();
-            let size: Size = physical_size.into();
-            window.set_size(size).unwrap();
-            window
-                .set_position(Position::Physical(tauri::PhysicalPosition { x: 0, y: 0 }))
-                .unwrap();
+        #[cfg(not(target_os = "macos"))]
+        {
+            if let Ok(Some(monitor)) = window.current_monitor() {
+                let physical_size: PhysicalSize<u32> = *monitor.size();
+                let size: Size = physical_size.into();
+                window.set_size(size).unwrap();
+                window
+                    .set_position(Position::Physical(tauri::PhysicalPosition { x: 0, y: 0 }))
+                    .unwrap();
+            }
         }
         window.show().map_err(|e| e.to_string())?;
         Ok("Hide".to_string())
