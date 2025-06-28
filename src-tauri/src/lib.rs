@@ -1,7 +1,7 @@
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::TrayIconBuilder,
-    Emitter, Manager, WebviewUrl, WebviewWindowBuilder,
+    Emitter, Manager, WebviewUrl, WebviewWindow, WebviewWindowBuilder,
 };
 #[cfg(not(target_os = "macos"))]
 use tauri::{PhysicalSize, Position};
@@ -25,6 +25,27 @@ fn toggle_overlay(app_handle: tauri::AppHandle) -> Result<String, String> {
     Ok(new_label)
 }
 
+fn resize_window_to_monitor(window: &WebviewWindow) -> Result<(), String> {
+    #[cfg(not(target_os = "macos"))]
+    {
+        if let Ok(Some(monitor)) = window.current_monitor() {
+            let physical_size: PhysicalSize<u32> = *monitor.size();
+            // reduce height by 40 pixels (typical taskbar height on Windows)
+            let height = physical_size.height.saturating_sub(60);
+
+            let size = tauri::Size::Physical(tauri::PhysicalSize {
+                width: physical_size.width,
+                height,
+            });
+            window.set_size(size).unwrap();
+            window
+                .set_position(Position::Physical(tauri::PhysicalPosition { x: 0, y: 0 }))
+                .unwrap();
+        }
+    }
+    Ok(())
+}
+
 fn do_toggle_overlay(app_handle: &tauri::AppHandle) -> Result<String, String> {
     let window = app_handle
         .get_webview_window("main")
@@ -34,23 +55,7 @@ fn do_toggle_overlay(app_handle: &tauri::AppHandle) -> Result<String, String> {
         window.hide().map_err(|e| e.to_string())?;
         Ok("Show".to_string())
     } else {
-        #[cfg(not(target_os = "macos"))]
-        {
-            if let Ok(Some(monitor)) = window.current_monitor() {
-                let physical_size: PhysicalSize<u32> = *monitor.size();
-                // reduce height by 40 pixels (typical taskbar height on Windows)
-                let height = physical_size.height.saturating_sub(60);
-
-                let size = tauri::Size::Physical(tauri::PhysicalSize {
-                    width: physical_size.width,
-                    height,
-                });
-                window.set_size(size).unwrap();
-                window
-                    .set_position(Position::Physical(tauri::PhysicalPosition { x: 0, y: 0 }))
-                    .unwrap();
-            }
-        }
+        resize_window_to_monitor(&window)?;
         window.show().map_err(|e| e.to_string())?;
         Ok("Hide".to_string())
     }
@@ -82,6 +87,7 @@ pub fn run() {
             }
 
             window.maximize().expect("Failed to maximize window");
+            resize_window_to_monitor(&window)?;
 
             let quit_i = MenuItem::with_id(app, QUIT_ID, "Quit", true, None::<&str>)?;
             let toggle_i = MenuItem::with_id(app, TOGGLE_ID, "Show", true, None::<&str>)?;
