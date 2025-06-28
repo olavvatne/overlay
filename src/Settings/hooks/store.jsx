@@ -1,5 +1,6 @@
 import { readTextFile } from "@tauri-apps/plugin-fs";
 import { LazyStore } from "@tauri-apps/plugin-store";
+import { emit } from "@tauri-apps/api/event";
 
 const settingsStore = new LazyStore("settings.json");
 const keymapStore = new LazyStore("keymaps.svg");
@@ -35,6 +36,7 @@ export function useKeymapStore() {
     await settingsStore.save();
     await keymapStore.clear();
     await keymapStore.save();
+    await emit("reload-main");
     window.location.reload();
   };
 

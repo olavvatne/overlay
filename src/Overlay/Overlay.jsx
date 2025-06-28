@@ -106,6 +106,9 @@ function Overlay() {
     await unregisterAll();
   }
 
+  async function reload() {
+    window.location.reload();
+  }
   useEffect(() => {
     let openUnsub;
     let closeUnsub;
@@ -114,12 +117,14 @@ function Overlay() {
       await setup();
       openUnsub = listen("settings-opened", cleanup);
       closeUnsub = listen("settings-closed", setup);
+      reloadUnsub = listen("reload-main", reload);
     })();
     return () => {
       isMounted = false;
       cleanup();
       if (openUnsub) openUnsub();
       if (closeUnsub) closeUnsub();
+      if (reloadUnsub) reloadUnsub();
     };
   }, []);
 
