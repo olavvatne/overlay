@@ -8,6 +8,7 @@ import {
   SizeSliderInput,
 } from "./components";
 import { useEffect, useState } from "preact/hooks";
+import ClearSettingsButton from "./components/ClearSettingsButton";
 
 export default function GeneralDetails() {
   const [version, setVersion] = useState(null);
@@ -35,6 +36,10 @@ export default function GeneralDetails() {
       </section>
       <section>
         <ScreenPosition />
+      </section>
+      <section className="detail-section">
+        <p>Clear all settings</p>
+        <ClearSettingsButton />
       </section>
       {version && (
         <section className="detail-section">

@@ -1,5 +1,6 @@
 import { readTextFile } from "@tauri-apps/plugin-fs";
 import { LazyStore } from "@tauri-apps/plugin-store";
+
 const settingsStore = new LazyStore("settings.json");
 const keymapStore = new LazyStore("keymaps.svg");
 
@@ -29,9 +30,18 @@ export function useKeymapStore() {
     return allNew;
   };
 
+  const clearStores = async () => {
+    await settingsStore.clear();
+    await settingsStore.save();
+    await keymapStore.clear();
+    await keymapStore.save();
+    window.location.reload();
+  };
+
   return {
     settingsStore,
     keymapStore,
     addKeymapLayers,
+    clearStores,
   };
 }

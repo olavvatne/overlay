@@ -4,7 +4,7 @@ use tauri::{
     Emitter, Manager, WebviewUrl, WebviewWindowBuilder,
 };
 #[cfg(not(target_os = "macos"))]
-use tauri::{PhysicalSize, Position, Size};
+use tauri::{PhysicalSize, Position};
 
 #[cfg(target_os = "macos")]
 use tauri::{ActivationPolicy, TitleBarStyle};
@@ -38,7 +38,13 @@ fn do_toggle_overlay(app_handle: &tauri::AppHandle) -> Result<String, String> {
         {
             if let Ok(Some(monitor)) = window.current_monitor() {
                 let physical_size: PhysicalSize<u32> = *monitor.size();
-                let size: Size = physical_size.into();
+                // reduce height by 40 pixels (typical taskbar height on Windows)
+                let height = physical_size.height.saturating_sub(60);
+
+                let size = tauri::Size::Physical(tauri::PhysicalSize {
+                    width: physical_size.width,
+                    height,
+                });
                 window.set_size(size).unwrap();
                 window
                     .set_position(Position::Physical(tauri::PhysicalPosition { x: 0, y: 0 }))
@@ -53,6 +59,7 @@ fn do_toggle_overlay(app_handle: &tauri::AppHandle) -> Result<String, String> {
 const QUIT_ID: &str = "quit";
 const TOGGLE_ID: &str = "toggle";
 const SETTINGS_ID: &str = "settings";
+const DEVTOOLS_ID: &str = "devtools";
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -80,8 +87,19 @@ pub fn run() {
             let toggle_i = MenuItem::with_id(app, TOGGLE_ID, "Show", true, None::<&str>)?;
             let settings_i =
                 MenuItem::with_id(app, SETTINGS_ID, "Settings...", true, None::<&str>)?;
+            #[cfg(debug_assertions)]
+            let devtools_i =
+                MenuItem::with_id(app, DEVTOOLS_ID, "Open DevTools", true, None::<&str>)?;
             let item_sep = PredefinedMenuItem::separator(app)?;
+            #[cfg(debug_assertions)]
+            let menu = Menu::with_items(
+                app,
+                &[&toggle_i, &settings_i, &item_sep, &devtools_i, &quit_i],
+            )?;
+
+            #[cfg(not(debug_assertions))]
             let menu = Menu::with_items(app, &[&toggle_i, &settings_i, &item_sep, &quit_i])?;
+
             TrayIconBuilder::new()
                 .icon(app.default_window_icon().unwrap().clone())
                 .icon_as_template(true)
@@ -144,6 +162,13 @@ pub fn run() {
                                     app_clone.emit_to("main", "settings-closed", ()).unwrap();
                                 }
                             });
+                        }
+                    }
+                    #[cfg(debug_assertions)]
+                    DEVTOOLS_ID => {
+                        if let Some(window) = app.get_webview_window("main") {
+                            window.set_always_on_top(false).unwrap();
+                            window.open_devtools();
                         }
                     }
                     _ => println!("menu item {:?} not handled", ev.id),

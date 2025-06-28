@@ -21,7 +21,7 @@ function Overlay() {
   const [fillColor, setFillColor] = useState("#ffffff");
   const [textColor, setTextColor] = useState("#000000");
   const [opacity, setOpacity] = useState(1);
-  const [size, setSize] = useState(100);
+  const [size, setSize] = useState(1);
 
   const [position, setPosition] = useState({
     alignItems: "center",
