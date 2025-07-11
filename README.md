@@ -1,11 +1,11 @@
-# Overlay
+# <img src="https://raw.githubusercontent.com/olavvatne/overlay/refs/heads/main/public/icon-readme.svg" width="32" height="32"> Overlay
 
 Display ergo keyboard layers onscreen. Can be used for other purposes as well, where you want to display svg images overlays onscreen.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/032094ff-189f-46cd-a473-099144a34381" height="200" />
-  <img src="https://github.com/user-attachments/assets/21d2f194-87e6-4423-ab69-0f82301448b8" height="200" />
-  <img src="https://github.com/user-attachments/assets/decbae02-75ae-432c-b1ea-097ceb4debd1" height="200" />
+  <img src="https://github.com/user-attachments/assets/f4439b04-c944-4243-80c1-c54bd476ad53" height="200" />
+  <img src="https://github.com/user-attachments/assets/0bd84331-9fe3-4f19-a84e-07a4ff2962d7" height="200" />
+  <img src="https://github.com/user-attachments/assets/37eff285-5bb9-4954-b6ee-744ad9d12389" height="200" />
 </p>
 
 ## ⚡ Usage
